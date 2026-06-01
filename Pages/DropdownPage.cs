@@ -12,7 +12,7 @@ namespace SeleniumAutomation.Pages
     public class DropdownPage : BasePage
     {
         // Locators
-        private By _dropdownLocator = By.Id("dropdown");
+        private readonly By _dropdownLocator = By.Id("dropdown");
 
         public DropdownPage(IWebDriver driver) : base(driver)
         {
