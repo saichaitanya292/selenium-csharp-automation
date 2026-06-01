@@ -1,5 +1,4 @@
 using OpenQA.Selenium;
-using System.Collections.Generic;
 using SeleniumAutomation.Config;
 
 namespace SeleniumAutomation.Pages
@@ -10,7 +9,7 @@ namespace SeleniumAutomation.Pages
     public class CheckboxesPage : BasePage
     {
         // Locators
-        private By _checkboxesLocator = By.CssSelector("input[type='checkbox']");
+        private readonly By _checkboxesLocator = By.CssSelector("input[type='checkbox']");
 
         public CheckboxesPage(IWebDriver driver) : base(driver)
         {
@@ -28,26 +27,25 @@ namespace SeleniumAutomation.Pages
 
         public void CheckCheckbox(int index)
         {
-            var checkboxes = GetAllCheckboxes();
-            if (index < checkboxes.Count && !checkboxes[index].Selected)
+            var checkbox = GetCheckboxAt(index);
+            if (!checkbox.Selected)
             {
-                ElementHelper.Click(checkboxes[index]);
+                ElementHelper.Click(checkbox);
             }
         }
 
         public void UncheckCheckbox(int index)
         {
-            var checkboxes = GetAllCheckboxes();
-            if (index < checkboxes.Count && checkboxes[index].Selected)
+            var checkbox = GetCheckboxAt(index);
+            if (checkbox.Selected)
             {
-                ElementHelper.Click(checkboxes[index]);
+                ElementHelper.Click(checkbox);
             }
         }
 
         public bool IsCheckboxChecked(int index)
         {
-            var checkboxes = GetAllCheckboxes();
-            return checkboxes[index].Selected;
+            return GetCheckboxAt(index).Selected;
         }
 
         public int GetCheckboxCount()
@@ -77,6 +75,17 @@ namespace SeleniumAutomation.Pages
                     ElementHelper.Click(checkbox);
                 }
             }
+        }
+
+        private IWebElement GetCheckboxAt(int index)
+        {
+            var checkboxes = GetAllCheckboxes();
+            if (index < 0 || index >= checkboxes.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), index, $"Checkbox index must be between 0 and {checkboxes.Count - 1}.");
+            }
+
+            return checkboxes[index];
         }
     }
 }
