@@ -35,7 +35,7 @@ namespace SeleniumAutomation.Tests
             _checkboxesPage.CheckCheckbox(checkboxIndex);
 
             // Assert
-            Assert.IsTrue(_checkboxesPage.IsCheckboxChecked(checkboxIndex), "Checkbox should be checked");
+            Assert.That(_checkboxesPage.IsCheckboxChecked(checkboxIndex), Is.True, "Checkbox should be checked");
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace SeleniumAutomation.Tests
             _checkboxesPage.UncheckCheckbox(checkboxIndex);
 
             // Assert
-            Assert.IsFalse(_checkboxesPage.IsCheckboxChecked(checkboxIndex), "Checkbox should be unchecked");
+            Assert.That(_checkboxesPage.IsCheckboxChecked(checkboxIndex), Is.False, "Checkbox should be unchecked");
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace SeleniumAutomation.Tests
             int count = _checkboxesPage.GetCheckboxCount();
             for (int i = 0; i < count; i++)
             {
-                Assert.IsTrue(_checkboxesPage.IsCheckboxChecked(i), $"Checkbox at index {i} should be checked");
+                Assert.That(_checkboxesPage.IsCheckboxChecked(i), Is.True, $"Checkbox at index {i} should be checked");
             }
         }
 
@@ -79,7 +79,7 @@ namespace SeleniumAutomation.Tests
             int count = _checkboxesPage.GetCheckboxCount();
             for (int i = 0; i < count; i++)
             {
-                Assert.IsFalse(_checkboxesPage.IsCheckboxChecked(i), $"Checkbox at index {i} should be unchecked");
+                Assert.That(_checkboxesPage.IsCheckboxChecked(i), Is.False, $"Checkbox at index {i} should be unchecked");
             }
         }
     }

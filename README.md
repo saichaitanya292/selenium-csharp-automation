@@ -6,7 +6,7 @@ This project is a Selenium C# automation framework for testing [The Internet](ht
 
 - .NET SDK (6.0 or later)
 - Visual Studio or Visual Studio Code
-- Chrome browser (for ChromeDriver)
+- Chrome browser (Selenium Manager resolves ChromeDriver automatically)
 
 ## Project Structure
 
@@ -35,7 +35,6 @@ selenium-csharp-automation/
 - **Selenium WebDriver**: Browser automation
 - **Reqnroll**: BDD/Cucumber framework for .NET
 - **NUnit**: Testing framework
-- **WebDriverManager**: Driver management
 - **FluentAssertions**: Assertion library
 
 ## Features

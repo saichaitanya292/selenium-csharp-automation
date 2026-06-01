@@ -1,7 +1,5 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace SeleniumAutomation.Utils
 {
@@ -21,13 +19,25 @@ namespace SeleniumAutomation.Utils
 
         private static IWebDriver CreateChromeDriver()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            
             var options = new ChromeOptions();
             options.AddArguments("--disable-notifications");
             options.AddArguments("--disable-popup-blocking");
-            
+
+            if (IsRunningInCi())
+            {
+                options.AddArguments("--headless=new");
+                options.AddArguments("--no-sandbox");
+                options.AddArguments("--disable-dev-shm-usage");
+                options.AddArguments("--window-size=1920,1080");
+            }
+
             return new ChromeDriver(options);
+        }
+
+        private static bool IsRunningInCi()
+        {
+            return string.Equals(Environment.GetEnvironmentVariable("CI"), "true", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(Environment.GetEnvironmentVariable("GITHUB_ACTIONS"), "true", StringComparison.OrdinalIgnoreCase);
         }
     }
 }
