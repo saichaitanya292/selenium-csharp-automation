@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using System.Collections.Generic;
 using SeleniumAutomation.Config;
 
 namespace SeleniumAutomation.Pages
