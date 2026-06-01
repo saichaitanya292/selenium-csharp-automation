@@ -25,11 +25,64 @@ jobs:
       run: dotnet build
     
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+      run: dotnet test --no-build --verbosity normal --results-directory TestResults --logger "trx;LogFileName=test-results.trx"
+
+    - name: Publish test report summary
+      if: always()
+      shell: python
+      run: |
+        import glob
+        import os
+        import xml.etree.ElementTree as ET
+
+        summary_path = os.environ["GITHUB_STEP_SUMMARY"]
+        trx_files = glob.glob("TestResults/**/*.trx", recursive=True)
+
+        with open(summary_path, "a", encoding="utf-8") as summary:
+            summary.write("## Test Report\n\n")
+
+            if not trx_files:
+                summary.write("No TRX test result files were found.\n")
+                raise SystemExit(0)
+
+            total = passed = failed = skipped = 0
+            failed_tests = []
+
+            for trx_file in trx_files:
+                tree = ET.parse(trx_file)
+                root = tree.getroot()
+                namespace = {"trx": root.tag.split("}")[0].strip("{")} if root.tag.startswith("{") else {}
+                counters = root.find(".//trx:Counters", namespace) if namespace else root.find(".//Counters")
+
+                if counters is not None:
+                    total += int(counters.attrib.get("total", 0))
+                    passed += int(counters.attrib.get("passed", 0))
+                    failed += int(counters.attrib.get("failed", 0))
+                    skipped += int(counters.attrib.get("notExecuted", 0))
+
+                results = root.findall(".//trx:UnitTestResult", namespace) if namespace else root.findall(".//UnitTestResult")
+                for result in results:
+                    if result.attrib.get("outcome") == "Failed":
+                        failed_tests.append(result.attrib.get("testName", "Unknown test"))
+
+            summary.write(f"| Total | Passed | Failed | Skipped |\n")
+            summary.write(f"| ---: | ---: | ---: | ---: |\n")
+            summary.write(f"| {total} | {passed} | {failed} | {skipped} |\n\n")
+
+            if failed_tests:
+                summary.write("### Failed tests\n\n")
+                for test_name in failed_tests:
+                    summary.write(f"- `{test_name}`\n")
+                summary.write("\n")
+
+            summary.write("Full TRX results are available in the `test-results` artifact.\n")
     
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: '**/test-results.trx'
+        path: |
+          TestResults/**/*.trx
+          **/Screenshots/**/*
+        if-no-files-found: warn
