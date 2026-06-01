@@ -1,12 +1,12 @@
 # Selenium C# Automation with Cucumber - The Internet
 
-This project is a Selenium C# automation framework for testing [The Internet](https://the-internet.herokuapp.com/) application using Reqnroll (the modern fork of Cucumber for .NET) with the Page Object Model (POM) design pattern and BDD (Behavior-Driven Development) approach.
+This project is a Selenium C# automation framework for testing [The Internet](https://the-internet.herokuapp.com/) application using Reqnroll with the Page Object Model (POM) design pattern and BDD (Behavior-Driven Development) approach.
 
 ## Prerequisites
 
 - .NET SDK (6.0 or later)
 - Visual Studio or Visual Studio Code
-- Chrome browser (for ChromeDriver)
+- Chrome browser (Selenium Manager resolves ChromeDriver automatically)
 
 ## Project Structure
 
@@ -20,7 +20,6 @@ selenium-csharp-automation/
 ├── Config/               # Configuration files
 ├── bin/                  # Build output
 ├── obj/                  # Object files
-├── app.config            # Reqnroll configuration
 └── selenium-csharp-automation.csproj
 ```
 
@@ -34,9 +33,8 @@ selenium-csharp-automation/
 ## Technologies Used
 
 - **Selenium WebDriver**: Browser automation
-- **Reqnroll**: BDD/Cucumber framework for .NET (modern successor to SpecFlow)
+- **Reqnroll**: BDD/Cucumber framework for .NET
 - **NUnit**: Testing framework
-- **WebDriverManager**: Driver management
 - **FluentAssertions**: Assertion library
 
 ## Features

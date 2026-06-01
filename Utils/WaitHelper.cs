@@ -30,12 +30,22 @@ namespace SeleniumAutomation.Utils
 
         public IWebElement WaitForElementToExist(By locator)
         {
-            return _wait.Until(ExpectedConditions.PresenceOfElementLocated(locator));
+            return _wait.Until(driver => driver.FindElement(locator));
         }
 
         public bool WaitForElementToDisappear(By locator)
         {
-            return _wait.Until(ExpectedConditions.StalenessOf(_driver.FindElement(locator)));
+            return _wait.Until(driver =>
+            {
+                try
+                {
+                    return driver.FindElements(locator).All(element => !element.Displayed);
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return true;
+                }
+            });
         }
 
         public void WaitForTextToBePresentInElement(IWebElement element, string text)

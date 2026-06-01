@@ -9,11 +9,11 @@ namespace SeleniumAutomation.Pages
     public class FormAuthenticationPage : BasePage
     {
         // Locators
-        private By _usernameInputLocator = By.Id("username");
-        private By _passwordInputLocator = By.Id("password");
-        private By _loginButtonLocator = By.XPath("//button[@type='submit']");
-        private By _flashMessageLocator = By.Id("flash");
-        private By _logoutButtonLocator = By.LinkText("Logout");
+        private readonly By _usernameInputLocator = By.Id("username");
+        private readonly By _passwordInputLocator = By.Id("password");
+        private readonly By _loginButtonLocator = By.XPath("//button[@type='submit']");
+        private readonly By _flashMessageLocator = By.Id("flash");
+        private readonly By _logoutButtonLocator = By.LinkText("Logout");
 
         public FormAuthenticationPage(IWebDriver driver) : base(driver)
         {
@@ -45,7 +45,7 @@ namespace SeleniumAutomation.Pages
         public string GetFlashMessage()
         {
             var flashMessage = WaitHelper.WaitForElementToBeVisible(_flashMessageLocator);
-            return ElementHelper.GetText(flashMessage);
+            return ElementHelper.GetText(flashMessage).Trim();
         }
 
         public void Login(string username, string password)
@@ -61,7 +61,7 @@ namespace SeleniumAutomation.Pages
             {
                 return ElementHelper.IsElementDisplayed(WaitHelper.WaitForElementToBeVisible(_logoutButtonLocator));
             }
-            catch
+            catch (WebDriverException)
             {
                 return false;
             }
