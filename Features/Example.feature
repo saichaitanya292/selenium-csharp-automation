@@ -1,7 +1,7 @@
-Feature: Example Feature
-  This is an example feature file for Cucumber/Reqnroll tests
+Feature: Home page
+  Verify that The Internet home page is available and lists examples.
 
-  Scenario: Example Scenario
-    Given I have a test setup
-    When I perform an action
-    Then I should see the expected result
+  Scenario: Home page displays available examples
+    Given the browser is ready
+    When I navigate to the home page
+    Then the home page should display available examples
