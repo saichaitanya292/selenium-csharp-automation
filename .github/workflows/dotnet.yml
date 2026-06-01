@@ -9,6 +9,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: read
 
     steps:
     - uses: actions/checkout@v4
@@ -76,6 +80,15 @@ jobs:
                 summary.write("\n")
 
             summary.write("Full TRX results are available in the `test-results` artifact.\n")
+
+    - name: Publish test results check
+      if: always()
+      uses: dorny/test-reporter@v2
+      with:
+        name: Test Results
+        path: TestResults/**/*.trx
+        reporter: dotnet-trx
+        fail-on-error: false
     
     - name: Upload test results
       if: always()
