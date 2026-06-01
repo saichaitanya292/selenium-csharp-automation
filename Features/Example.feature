@@ -1,5 +1,5 @@
 Feature: Example Feature
-  This is an example feature file for Cucumber/SpecFlow tests
+  This is an example feature file for Cucumber/Reqnroll tests
 
   Scenario: Example Scenario
     Given I have a test setup

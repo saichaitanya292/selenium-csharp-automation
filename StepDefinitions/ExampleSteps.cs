@@ -1,4 +1,4 @@
-using TechTalk.SpecFlow;
+using Reqnroll;
 using NUnit.Framework;
 
 namespace SeleniumCSharpAutomation.StepDefinitions
