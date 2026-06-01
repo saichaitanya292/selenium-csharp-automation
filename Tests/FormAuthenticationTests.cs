@@ -26,7 +26,7 @@ namespace SeleniumAutomation.Tests
             _formAuthPage.Login(username, password);
 
             // Assert
-            Assert.IsTrue(_formAuthPage.IsLogoutButtonDisplayed(), "Logout button should be displayed after successful login");
+            Assert.That(_formAuthPage.IsLogoutButtonDisplayed(), Is.True, "Logout button should be displayed after successful login");
             Assert.That(_formAuthPage.GetCurrentUrl(), Does.Contain("secure"), "URL should contain 'secure'");
         }
 
@@ -42,7 +42,7 @@ namespace SeleniumAutomation.Tests
 
             // Assert
             string flashMessage = _formAuthPage.GetFlashMessage();
-            Assert.That(flashMessage, Does.Contain("Invalid credentials"), "Error message should display for invalid credentials");
+            Assert.That(flashMessage, Does.Contain("Your username is invalid!"), "Error message should display for invalid credentials");
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace SeleniumAutomation.Tests
 
             // Assert
             string flashMessage = _formAuthPage.GetFlashMessage();
-            Assert.That(flashMessage, Does.Contain("Invalid credentials"), "Error message should display for empty username");
+            Assert.That(flashMessage, Does.Contain("Your username is invalid!"), "Error message should display for empty username");
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace SeleniumAutomation.Tests
         {
             // Arrange
             _formAuthPage.Login("tomsmith", "SuperSecretPassword!");
-            Assert.IsTrue(_formAuthPage.IsLogoutButtonDisplayed(), "Logout button should be displayed");
+            Assert.That(_formAuthPage.IsLogoutButtonDisplayed(), Is.True, "Logout button should be displayed");
 
             // Act
             _formAuthPage.ClickLogout();

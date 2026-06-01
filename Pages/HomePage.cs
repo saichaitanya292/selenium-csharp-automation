@@ -9,8 +9,8 @@ namespace SeleniumAutomation.Pages
     public class HomePage : BasePage
     {
         // Locators
-        private By _headingLocator = By.XPath("//h1[contains(text(), 'Welcome')]");
-        private By _availableExamplesLocator = By.XPath("//h2[contains(text(), 'Available Examples')]");
+        private readonly By _headingLocator = By.XPath("//h1[contains(text(), 'Welcome')]");
+        private readonly By _availableExamplesLocator = By.XPath("//h2[contains(text(), 'Available Examples')]");
 
         public HomePage(IWebDriver driver) : base(driver)
         {
