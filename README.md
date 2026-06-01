@@ -1,6 +1,6 @@
 # Selenium C# Automation with Cucumber - The Internet
 
-This project is a Selenium C# automation framework for testing [The Internet](https://the-internet.herokuapp.com/) application using SpecFlow (Cucumber for .NET) with the Page Object Model (POM) design pattern and BDD (Behavior-Driven Development) approach.
+This project is a Selenium C# automation framework for testing [The Internet](https://the-internet.herokuapp.com/) application using Reqnroll (the modern fork of Cucumber for .NET) with the Page Object Model (POM) design pattern and BDD (Behavior-Driven Development) approach.
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ selenium-csharp-automation/
 ├── Config/               # Configuration files
 ├── bin/                  # Build output
 ├── obj/                  # Object files
-├── app.config            # SpecFlow configuration
+├── app.config            # Reqnroll configuration
 └── selenium-csharp-automation.csproj
 ```
 
@@ -34,7 +34,7 @@ selenium-csharp-automation/
 ## Technologies Used
 
 - **Selenium WebDriver**: Browser automation
-- **SpecFlow**: Cucumber/BDD framework for .NET
+- **Reqnroll**: BDD/Cucumber framework for .NET (modern successor to SpecFlow)
 - **NUnit**: Testing framework
 - **WebDriverManager**: Driver management
 - **FluentAssertions**: Assertion library
@@ -47,9 +47,9 @@ selenium-csharp-automation/
 - Implicit and explicit waits
 - Element interactions (click, type, select, etc.)
 - Screenshot capture on test failure
-- SpecFlow test runner integration
+- Reqnroll test runner integration
 
-## Writing Tests with Cucumber/SpecFlow
+## Writing Tests with Cucumber/Reqnroll
 
 ### Example Feature File
 
@@ -73,7 +73,7 @@ Feature: Login functionality
 Create step definition classes in the `StepDefinitions/` directory:
 
 ```csharp
-using TechTalk.SpecFlow;
+using Reqnroll;
 using YourNamespace.Pages;
 
 [Binding]
@@ -127,6 +127,6 @@ dotnet test --filter "Category=LoginTests"
 
 ## Resources
 
-- [SpecFlow Documentation](https://specflow.org/)
+- [Reqnroll Documentation](https://docs.reqnroll.net/)
 - [Gherkin Syntax](https://cucumber.io/docs/gherkin/)
 - [Selenium WebDriver C# Documentation](https://www.selenium.dev/documentation/webdriver/)
