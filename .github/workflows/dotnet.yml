@@ -64,38 +64,17 @@ jobs:
                     failed += int(counters.attrib.get("failed", 0))
                     skipped += int(counters.attrib.get("notExecuted", 0))
 
-                results = root.findall(".//trx:UnitTestResult", namespace) if namespace else root.findall(".//UnitTestResult")
-                for result in results:
-                    if result.attrib.get("outcome") == "Failed":
-                        failed_tests.append(result.attrib.get("testName", "Unknown test"))
-
             summary.write(f"| Total | Passed | Failed | Skipped |\n")
             summary.write(f"| ---: | ---: | ---: | ---: |\n")
             summary.write(f"| {total} | {passed} | {failed} | {skipped} |\n\n")
 
-            if failed_tests:
-                summary.write("### Failed tests\n\n")
-                for test_name in failed_tests:
-                    summary.write(f"- `{test_name}`\n")
-                summary.write("\n")
-
-            summary.write("Full TRX results are available in the `test-results` artifact.\n")
-
-    - name: Publish test results check
-      if: always()
-      uses: dorny/test-reporter@v2
-      with:
-        name: Test Results
-        path: TestResults/**/*.trx
-        reporter: dotnet-trx
-        fail-on-error: false
-    
-    - name: Upload test results
+    - name: Upload Test Artifacts
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: test-results
         path: |
           TestResults/**/*.trx
+          TestResults/**/*.html
           **/Screenshots/**/*
         if-no-files-found: warn
